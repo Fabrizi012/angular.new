@@ -1,0 +1,59 @@
+<div class="asistencia-container">
+  <h2>Registro de Asistencia - Laboratorio</h2>
+
+  <!-- Alerta de Tardanzas -->
+  <div *ngIf="alertaShown" class="alerta alerta-warning">
+    {{ mensajeAlerta }}
+  </div>
+
+  <!-- Estadísticas -->
+  <div class="estadisticas">
+    <div class="stat-card">
+      <h3>Total de Alumnos</h3>
+      <p class="stat-number">{{ alumnos.length }}</p>
+    </div>
+    <div class="stat-card">
+      <h3>Tardanzas</h3>
+      <p class="stat-number">{{ totalTardanzas }}</p>
+    </div>
+    <div class="stat-card">
+      <h3>Porcentaje de Tardanzas</h3>
+      <p class="stat-number">{{ porcentajeTardanzas.toFixed(2) }}%</p>
+    </div>
+  </div>
+
+  <!-- Tabla de Asistencia -->
+  <table class="tabla-asistencia">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nombre</th>
+        <th>Hora de Ingreso</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let alumno of alumnos; let i = index" [ngClass]="'estado-' + alumno.estado">
+        <td>{{ i + 1 }}</td>
+        <td>{{ alumno.nombre }}</td>
+        <td>{{ alumno.horaIngreso }}</td>
+        <td [ngClass]="'badge badge-' + alumno.estado">
+          {{ alumno.estado | uppercase }}
+        </td>
+        <td>
+          <button
+            *ngIf="alumno.estado === 'falta'"
+            class="btn btn-justify"
+            (click)="justificarFalta(alumno)"
+          >
+            Justificar
+          </button>
+          <button class="btn btn-change" (click)="cambiarEstado(alumno)">
+            Cambiar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
