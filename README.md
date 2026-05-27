@@ -1,2 +1,0 @@
-# angular.new
-examen
